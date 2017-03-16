@@ -11,7 +11,7 @@ typedef struct node{
 } node;
 
 typedef struct heap{
-  node * nodes[56];
+  node * nodes[60];
   int size;
 } heap;
 
@@ -93,7 +93,7 @@ void huffman_procedure(node ** nodes, heap * encoding, int n){
   for(int it = 0; it < n; it++){
     min_heap_insert(encoding, nodes[it]);
   }
-  print_heap(encoding);
+  //print_heap(encoding);
   while(encoding->size > 1){
     node *i = extract_min(encoding);
     node *j = extract_min(encoding);
@@ -102,34 +102,57 @@ void huffman_procedure(node ** nodes, heap * encoding, int n){
     new->c = '*';
     new->left = i;
     new->right = j;
-    printf("*****left = %c  ",new->left->c);
-    printf("right = %c\n",new->right->c);
     min_heap_insert(encoding, new);
-    print_heap(encoding);
+    //print_heap(encoding);
   }
 }
 
-void print_encoding_tree(node * node){
-  if(node->left != NULL){
-    print_encoding_tree(node->left);
+//Print in-order-walk, swapping left and right.
+void print_encoding_tree(node * node, int mult){
+  if(node->right != NULL){
+    print_encoding_tree(node->right, mult+1);
+  }
+  for(int i = 1; i < mult; i++){
+    printf("\t");
   }
   printf("[%c,%d]\n",node->c,node->freq);
-  if(node->right != NULL){
-    print_encoding_tree(node->right);
+  if(node->left != NULL){
+    print_encoding_tree(node->left, mult+1);
   }
 }
 
-void print_preorder(node * node){
+//Print pre-order-walk.
+void print_preorder(node * node, int mult){
+  for(int i = 1; i < mult; i++){
+    printf("\t");
+  }
   printf("[%c,%d]\n",node->c,node->freq);
   if(node->left != NULL){
-    print_encoding_tree(node->left);
+    print_preorder(node->left,mult+1);
   }
   if(node->right != NULL){
-    print_encoding_tree(node->right);
+    print_preorder(node->right,mult+1);
+  }
+}
+
+//The string for the binary representation.
+char str[60];
+
+void print_binary(node* node, int i) {
+  if(node != NULL) {
+    if (node->c != '*'){
+      printf("%c : ", node->c);
+      printf("%.*s\n", i, str);
+    }
+    str[i] = '0';
+    print_binary(node->left, i+1);
+    str[i] = '1';
+    print_binary(node->right, i+1);
   }
 }
 
 int main(){
+
   heap encoding[27];
   node * nodes[27];
 
@@ -146,9 +169,14 @@ int main(){
 
   huffman_procedure(nodes, encoding, n);
 
-  print_encoding_tree(encoding->nodes[1]);
+  printf("**Tilt your head to the left: Quasi-in-order (swapped left and right so that the tree looks nice)\n");
+  print_encoding_tree(encoding->nodes[1],1);
   printf("\n");
-  print_preorder(encoding->nodes[1]);
+
+  printf("**Tilt your head to the left: Pre-order\n");
+  print_preorder(encoding->nodes[1],1);
+  printf("\n");
+  print_binary(encoding->nodes[1],0);
 
   return 0;
 
