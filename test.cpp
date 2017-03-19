@@ -15,7 +15,7 @@ int main(){
   arraycopy(A,B,3);
   cout << B[1] << endl;
 
-  cout << B[]
+  cout << B[2] << endl;
 
   return 0;
 }

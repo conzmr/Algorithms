@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 typedef struct node node;
 typedef struct node{
@@ -151,6 +152,42 @@ void print_binary(node* node, int i) {
   }
 }
 
+void print_encode_phrase(char phrase[], int n){
+  for(int i = 0; i < n; i++){
+    //printf("Char at i:%d = %c\n",i, phrase[i]);
+    switch (phrase[i]) {
+      case 'a': printf("1010 "); break;
+      case 'b': printf("100100 "); break;
+      case 'c': printf("00101 "); break;
+      case 'd': printf("10111 "); break;
+      case 'e': printf("010 "); break;
+      case 'f': printf("110100 "); break;
+      case 'g': printf("100111 "); break;
+      case 'h': printf("0001 "); break;
+      case 'i': printf("0111 "); break;
+      case 'j': printf("1101111110 "); break;
+      case 'k': printf("11011110 "); break;
+      case 'l': printf("10110 "); break;
+      case 'm': printf("110110 "); break;
+      case 'n': printf("0110 "); break;
+      case 'o': printf("1000 "); break;
+      case 'p': printf("100110 "); break;
+      case 'q': printf("1101111100 "); break;
+      case 'r': printf("0000 "); break;
+      case 's': printf("0011 "); break;
+      case 't': printf("1100 "); break;
+      case 'u': printf("00100 "); break;
+      case 'v': printf("1101110 "); break;
+      case 'w': printf("110101 "); break;
+      case 'x': printf("1101111111 "); break;
+      case 'y': printf("100101 "); break;
+      case 'z': printf("1101111101 "); break;
+      case ' ': printf("111 "); break;
+    }
+  }
+  printf("\n");
+}
+
 int main(){
 
   heap encoding[27];
@@ -177,6 +214,10 @@ int main(){
   print_preorder(encoding->nodes[1],1);
   printf("\n");
   print_binary(encoding->nodes[1],0);
+
+  char phrase[21] = {"hey my name is arturo"};
+
+  print_encode_phrase(phrase, 21);
 
   return 0;
 
