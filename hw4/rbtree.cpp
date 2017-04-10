@@ -11,7 +11,7 @@ bool BLACK = 1;
 
 struct rbnode{
   int key;
-  rbnode *p;
+  rbnode *p m
   rbnode *left;
   rbnode *right;
   bool color; //1 is black, 0 is red
