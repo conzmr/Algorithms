@@ -8,16 +8,16 @@ using namespace std;
 
 typedef pair<int, int> int_pair;
 
-struct Graph {
+struct graph {
   int V, E;
     vector< pair<int, int_pair> > edges;   //Set of Edges: int is weight and iPair are Vertices
 
-    Graph(int V, int E) {
+    graph(int V, int E) {
         this->V = V;
         this->E = E;
     }
 
-    void addEdge(int u, int v, int w) {
+    void add_edge(int u, int v, int w) {
         edges.push_back(pair<int, int_pair>(w,int_pair(u,v)));
     }
 
@@ -44,26 +44,26 @@ struct Graph {
 
 int main() {
   int V = 9, E = 14;
-  Graph g(V, E);
-  g.addEdge(0, 1, 4);
-  g.addEdge(0, 7, 8);
-  g.addEdge(1, 2, 8);
-  g.addEdge(1, 7, 11);
-  g.addEdge(2, 3, 7);
-  g.addEdge(2, 8, 2);
-  g.addEdge(2, 5, 4);
-  g.addEdge(3, 4, 9);
-  g.addEdge(3, 5, 14);
-  g.addEdge(4, 5, 10);
-  g.addEdge(5, 6, 2);
-  g.addEdge(6, 7, 1);
-  g.addEdge(6, 8, 6);
-  g.addEdge(7, 8, 7);
+  graph g(V, E);
+  g.add_edge(0, 1, 4);
+  g.add_edge(0, 7, 8);
+  g.add_edge(1, 2, 8);
+  g.add_edge(1, 7, 11);
+  g.add_edge(2, 3, 7);
+  g.add_edge(2, 8, 2);
+  g.add_edge(2, 5, 4);
+  g.add_edge(3, 4, 9);
+  g.add_edge(3, 5, 14);
+  g.add_edge(4, 5, 10);
+  g.add_edge(5, 6, 2);
+  g.add_edge(6, 7, 1);
+  g.add_edge(6, 8, 6);
+  g.add_edge(7, 8, 7);
 
-  cout << "Edges of MST are" << endl;
+  cout << "Edges of Minimum Spanning Tree:" << endl;
   int MSTWeight = g.kruskal();
 
-  cout << "\nWeight of MST is " << MSTWeight << endl;
+  cout << "\nWeight of MST: " << MSTWeight << endl;
 
   return 0;
 }
