@@ -5,8 +5,8 @@ import numpy as np
 x = []
 y = []
 
-fo = open("data.txt","r")
-size = 99
+fo = open("data_kruskal.txt","r")
+size = 98
 for i in range(size):
     line_split = fo.readline().split(",")
     x.append(line_split[0])
@@ -14,9 +14,9 @@ for i in range(size):
 
 plt.plot(x, y, label = 'Time Complexity')
 
-plt.xlabel('Number of Vertices')
+plt.xlabel('E')
 plt.ylabel('Time')
-plt.title('Graph: Dijkstra')
+plt.title('Graph: Kruskal')
 plt.grid(True)
 plt.legend()
 plt.show()

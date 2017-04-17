@@ -11,7 +11,7 @@ bool BLACK = 1;
 
 struct rbnode{
   int key;
-  rbnode *p m
+  rbnode *p;
   rbnode *left;
   rbnode *right;
   bool color; //1 is black, 0 is red
@@ -191,18 +191,22 @@ void generate_random_array(int *a, int n, bool silence){
 }
 
 int main(){
-  int n = 10;
-  int values[n];
-  generate_random_array(values, n, false);
-  RedBlackTree *tree = new RedBlackTree();
+  clock_t begin, end;
+  for(int n = 10; n < 1000; n++){
+    int values[n];
+    generate_random_array(values, n, true);
+    RedBlackTree *tree = new RedBlackTree();
 
-  for(int i = 0; i < n; i++){
-    tree->insert(values[i]);
+    begin = clock();
+    for(int i = 0; i < n; i++){
+      tree->insert(values[i]);
+    }
+    end = clock();
+    double ex_time = (end - begin);
+    cout << n << "," << ex_time << endl;
+    // cout << tree->get_size() << endl;
+    // tree->print_inorder_inverse();
+    delete(tree);
   }
-
-  cout << tree->get_size() << endl;
-  tree->print_inorder_inverse();
-  delete(tree);
-
   return 0;
 }

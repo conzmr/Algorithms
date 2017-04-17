@@ -54,7 +54,7 @@ void print_path(Graph *g, string u){
 }
 
 int main() {
-  for(int h = 10; h < 1000; h += 10) {
+  for(int h = 10; h < 1000; h++) {
     Graph *g = new Graph();
     int graph_size = h;
 
@@ -90,9 +90,9 @@ int main() {
     dijkstra(g, "0", graph_size);
     end = clock();
 
-    double exTime = ( end - begin );
+    double ex_time = (end - begin);
 
-    cout << graph_size << "," << exTime << endl;
+    cout << graph_size << "," << ex_time << endl;
 
     //print_path(g, "4");
 

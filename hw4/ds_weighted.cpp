@@ -79,23 +79,25 @@ public:
   }
 };
 
-
 int main() {
-  int n = 5;
+  clock_t begin, end;
+  for(int n = 10; n < 1000; n++){
 
-  random_device rd;
-  mt19937 gen(rd());
-  uniform_int_distribution<> dis(-1,n-1);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(-1,n-1);
 
-  DisjointSetWeighted *sets = new DisjointSetWeighted(n);
+    DisjointSetWeighted *sets = new DisjointSetWeighted(n);
 
-  sets->make_n_sets();
-
-  for(int i = 0; i < n - 1; i++)
-    sets->union_(dis(gen),dis(gen));
-  sets->print_out();
-
-  delete(sets);
-
+    sets->make_n_sets();
+    begin = clock();
+    for(int i = 0; i < n - 1; i++)
+      sets->union_(dis(gen),dis(gen));
+    end = clock();
+    double ex_time = (end - begin);
+    cout << n << "," << ex_time << endl;
+    //sets->print_out();
+    delete(sets);
+  }
   return 0;
 }
