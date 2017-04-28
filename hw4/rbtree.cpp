@@ -64,6 +64,19 @@ public:
     }
   }
 
+  rbnode *get(int key){
+    rbnode *temp = this->root;
+    while(temp->key != key && temp != this->nil){
+      if(temp->key > key){
+        temp = temp->left;
+      }
+      else{
+        temp = temp->right;
+      }
+    }
+    return temp;
+  }
+
   void insert(int key){
     rbnode *z = new rbnode(key);
     rbnode *y = this->nil;
@@ -257,8 +270,8 @@ public:
           }
         }
       }
-    x->color = BLACK;
     }
+    x->color = BLACK;
   }
 
   void rb_delete(rbnode *z){
@@ -309,7 +322,7 @@ void generate_random_array(int *a, int n, bool silence){
     cout << endl;
 }
 
-int main(){
+void random_tree_perform() {
   clock_t begin, end;
   for(int n = 10; n < 1000; n++){
     int values[n];
@@ -327,5 +340,26 @@ int main(){
     // tree->print_inorder_inverse();
     delete(tree);
   }
+}
+
+int main(){
+  RedBlackTree *tree = new RedBlackTree();
+  tree->insert(30);
+  tree->insert(20);
+  tree->insert(40);
+  tree->insert(35);
+  tree->print_inorder_inverse();
+  cout << "Delete 20" << endl;
+  tree->rb_delete(tree->get(20));
+  tree->print_inorder_inverse();
+  cout << "Delete 30" << endl;
+  tree->rb_delete(tree->get(30));
+  tree->print_inorder_inverse();
+  cout << "Delete 40" << endl;
+  tree->rb_delete(tree->get(40));
+  tree->print_inorder_inverse();
+  cout << "Delete 35" << endl;
+  tree->rb_delete(tree->get(35));
+  tree->print_inorder_inverse();
   return 0;
 }
