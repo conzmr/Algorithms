@@ -175,6 +175,125 @@ public:
     }
     this->root->color = BLACK;
   }
+
+  void rb_transplant(rbnode *u, rbnode *v){
+    if(u->p == this->nil){
+      this->root = v;
+    }
+    else if(u == u->p->left){
+      u->p->left = v;
+    }
+    else{
+      u->p->right = v;
+    }
+    v->p = u->p;
+  }
+
+  rbnode * tree_minimum(rbnode *node){
+    rbnode *min = node;
+    while(min->left != this->nil){
+      min = min->left;
+    }
+    return min;
+  }
+
+
+
+
+  void rb_delete_fixup(rbnode *x){
+    rbnode *w;
+    while(x != this->root && x->color == BLACK){
+      if(x == x->p->left){
+        w = x->p->right;
+        if(w->color == RED){
+          w->color = BLACK;
+          x->p->color = RED;
+          left_rotate(x->p);
+          w = x->p->right;
+        }
+        if(w->left->color == BLACK && w->right->color == BLACK){
+          w->color = RED;
+          x = x->p;
+        }
+        else{
+          if(w->right->color == BLACK){
+            w->left->color = BLACK;
+            w->color = RED;
+            right_rotate(w);
+            w = x->p->right;
+          }
+          w->color = x->p->color;
+          x->p->color = BLACK;
+          w->right->color = BLACK;
+          left_rotate(x->p);
+          x = this->root;
+        }
+      }
+      else{
+        if(x == x->p->right){
+          w = x->p->left;
+          if(w->color == RED){
+            w->color = BLACK;
+            x->p->color = RED;
+            right_rotate(x->p);
+            w = x->p->left;
+          }
+          if(w->right->color == BLACK && w->left->color == BLACK){
+            w->color = RED;
+            x = x->p;
+          }
+          else{
+            if(w->left->color == BLACK){
+              w->right->color = BLACK;
+              w->color = RED;
+              left_rotate(w);
+              w = x->p->left;
+            }
+            w->color = x->p->color;
+            x->p->color = BLACK;
+            w->left->color = BLACK;
+            right_rotate(x->p);
+            x = this->root;
+          }
+        }
+      }
+    x->color = BLACK;
+    }
+  }
+
+  void rb_delete(rbnode *z){
+    rbnode *x;
+    rbnode *y = z;
+    bool y_original_color = y->color;
+    if(z->left == this->nil){
+      x = z->right;
+      rb_transplant(z, z->right);
+    }
+    else if(z->right == this->nil){
+      x = z->left;
+      rb_transplant(z, z->left);
+    }
+    else{
+      y = tree_minimum(z->right);
+      y_original_color = y->color;
+      x = y->right;
+      if(y->p == z){
+        x->p = y;
+      }
+      else{
+        rb_transplant(y, y->right);
+        y->right = z->right;
+        y->right->p = y;
+      }
+      rb_transplant(z, y);
+      y->left = z->left;
+      y->left->p = y;
+      y->color = z->color;
+    }
+    if(y_original_color == BLACK){
+      rb_delete_fixup(x);
+    }
+  }
 };
 
 void generate_random_array(int *a, int n, bool silence){
